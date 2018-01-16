@@ -10,6 +10,7 @@ using System.Timers;
 using SharpDX;
 using D2D = SharpDX.Direct2D1;
 using WpfDirectX;
+using System.ComponentModel;
 
 namespace WpfLovesSharpDX {
     /// <summary>
@@ -34,6 +35,10 @@ namespace WpfLovesSharpDX {
         private void ToggleButton_Unchecked(object sender, RoutedEventArgs e) {
             D2DComponent.Running = false;
         }
+
+        protected override void OnClosing(CancelEventArgs e) {
+            D2DComponent.Running = false;
+        }
     }
 
     public class MyDirect2DComponent : Direct2DComponent {
@@ -50,10 +55,6 @@ namespace WpfLovesSharpDX {
             
             random = new Random();
             points = new List<D2D.Ellipse>();
-
-            this.Unloaded += (a, b) => {
-                Running = false;
-            };
         }
 
         public Task Run() {
